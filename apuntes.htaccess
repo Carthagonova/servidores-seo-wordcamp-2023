@@ -1,0 +1,105 @@
+#####################################
+
+#http a https:
+<IfModule mod_rewrite.c>
+RewriteCond %{HTTPS} off
+RewriteRule (.*) https://www.example.com/$1 [R=301,L,QSA]
+</IfModule>
+
+#https a http:
+<IfModule mod_rewrite.c>
+RewriteCond %{HTTPS} on
+RewriteRule (.*) http://www.example.com/$1 [R=301,L,QSA]
+</IfModule>
+
+#no www a www:
+<IfModule mod_rewrite.c>
+RewriteCond %{HTTP_HOST} ^example.com [NC]
+RewriteRule (.*) https://www.example.com/$1 [R=301,L,QSA]
+</IfModule>
+
+#www a nowww:
+<IfModule mod_rewrite.c>
+RewriteCond %{HTTP_HOST} ^www.example.com [NC]
+RewriteRule (.*) https://example.com/$1 [R=301,L,QSA]
+</IfModule>
+
+#Redireccionar Slash al final (cambiando a sin barra):
+<IfModule mod_rewrite.c>
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule (.*)/$ https://www.example.com/$1 [R=301,L,QSA]
+</IfModule>
+
+#Redireccionando Slash al final (cambiando a versión con barra):
+<IfModule mod_rewrite.c>
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !(.*)/$
+RewriteRule (.*) https://www.example.com/$1/ [R=301,L,QSA]
+</IfModule>
+#cuidado de no hacer esto:
+# http://web.archive.org/web/20221018221526/https://revolunatic.com/agencia-seo-valencia
+# http://web.archive.org/web/20221018221526/https://revolunatic.com/agencia-seo-valencia/
+
+#####################################################
+#x-robots:
+<If "%{THE_REQUEST} =~ m# /wp-content/themes/sanchezdonate/images/rrss/#i">
+Header set X-Robots-Tag "noindex"
+</If>
+<ElseIf "%{THE_REQUEST} =~ m# /noindex/#i">
+Header set X-Robots-Tag "noindex"
+</ElseIf>
+<ElseIf "%{THE_REQUEST} =~ m# /wp-content/themes/sanchezdonate/videos/master/#i">
+Header set X-Robots-Tag "noindex"
+</ElseIf>
+#Toda la web:
+<ifModule mod_headers.c>
+Header set X-Robots-Tag "noindex, nofollow"
+</ifModule>
+
+
+######################################
+htaccess
+
+# Bloquear User Agent
+RewriteEngine On
+RewriteCond %{HTTP_USER_AGENT} ^.*(Googlebot|SCspider|Textbot|s2bot).*$ [NC]
+RewriteRule .* - [F,L]
+
+
+# identificación usuario
+
+AuthUserFile /home/stage/web/stage.bigseo.com/public_html/.htpasswd
+AuthType Basic
+AuthName "Prueba a entrar"
+Require valid-user
+#<?php echo dirname(__FILE__) . '/.htpasswd';?>
+
+#Personalizar mensajes de error:
+ErrorDocument 401 '<!DOCTYPE html><html lang="es" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><link rel="shortcut icon" type="image/x-icon" href="https://carlos.sanchezdonate.com/wp-content/themes/sanchezdonate/images/favicon/favicon.ico"><link rel="apple-touch-icon-precomposed" sizes="300x300" href="https://carlos.sanchezdonate.com/wp-content/themes/sanchezdonate/images/favicon/favicon.png"/><link rel="icon" type="image/png" href="https://carlos.sanchezdonate.com/wp-content/themes/sanchezdonate/images/favicon/favicon.png" sizes="300x300"/><meta name="viewport" content="initial-scale=1, maximum-scale=6"><title>401 No autorizado</title><style>html{height:100%;background:#faf7fb;display:flex;align-items:flex-start;justify-content:space-around}p{font-size:20px}</style></head><h1 style="font-size: 40px;color:#8d096b;">Error 401 No autorizado</h1><p>No est&aacutes autorizado para acceder a esta p&aacutegina y lo sabes, mala suerte.</p></body></html>'
+ErrorDocument 403 '<!DOCTYPE html><html lang="es" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><link rel="shortcut icon" type="image/x-icon" href="https://carlos.sanchezdonate.com/wp-content/themes/sanchezdonate/images/favicon/favicon.ico"><link rel="apple-touch-icon-precomposed" sizes="300x300" href="https://carlos.sanchezdonate.com/wp-content/themes/sanchezdonate/images/favicon/favicon.png"/><link rel="icon" type="image/png" href="https://carlos.sanchezdonate.com/wp-content/themes/sanchezdonate/images/favicon/favicon.png" sizes="300x300"/><meta name="viewport" content="initial-scale=1, maximum-scale=6"><title>403 Prohibido</title><style>html{height:100%;background:#faf7fb;display:flex;align-items:flex-start;justify-content:space-around}p{font-size:20px}</style></head><h1 style="font-size: 40px;color:#8d096b;">Error 403 Acceso no permitido</h1><p>Est&aacutes siendo bloqueado para esta p&aacutegina, si crees que es un error <a href="https://www.linkedin.com/in/carlos-sanchez-donate/" style="color:#8d096b;text-decoration:none;" title="Carlos Sanchez" target="_blank">contacta conmigo</a></p></body></html>'
+ErrorDocument 410 '<!DOCTYPE html><html lang="es" xmlns="http://www.w3.org/1999/xhtml"><head><meta charset="utf-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><link rel="shortcut icon" type="image/x-icon" href="https://carlos.sanchezdonate.com/wp-content/themes/sanchezdonate/images/favicon/favicon.ico"><link rel="apple-touch-icon-precomposed" sizes="300x300" href="https://carlos.sanchezdonate.com/wp-content/themes/sanchezdonate/images/favicon/favicon.png"/><link rel="icon" type="image/png" href="https://carlos.sanchezdonate.com/wp-content/themes/sanchezdonate/images/favicon/favicon.png" sizes="300x300"/><meta name="viewport" content="initial-scale=1, maximum-scale=6"><title>410 Gone</title><style>html{height:100%;background:#faf7fb;display:flex;align-items:flex-start;justify-content:space-around}p{font-size:20px}</style></head><h1 style="font-size: 40px;color:#8d096b;">410 Esta p&aacutegina ya no existe</h1><p>Esta p&aacutegina ha dejado de existir, no estar&aacute m&aacutes disponible en esta web y no hay ninguna p&aacutegina alternativa. Por favor, elimina todas las referencias a esta URL ya que no volver&aacute a existir. Si tienes alguna duda, <a href="https://www.linkedin.com/in/carlos-sanchez-donate/" style="color:#8d096b;text-decoration:none;" title="Carlos Sanchez" target="_blank">contacta conmigo</a></p><!-- á ñé íó --></body></html>'
+
+
+###################################
+
+#Redirecciones parámetros:
+<IfModule mod_rewrite.c>
+RewriteCond %{REQUEST_URI} ^/(qr)/ [NC]
+RewriteCond %{QUERY_STRING} (pagomaster)(.*)
+RewriteRule (.*) /pagos-master-de-seo/ [R=301,L,QSD]
+</IfModule>
+
+#Redireccionar espacios (se hace literal)
+</IfModule>
+RewriteEngine On
+RewriteRule ^([^á]*)á([^á]*á.*) $1a$2 [N]
+RewriteRule ^([^á]*)á([^á]*)$ /$1a$2 [L,R=301]
+</IfModule>
+
+# Crear carpetas que tienen el mismo nombre que páginas:
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} /sample-page/$ [OR]
+RewriteCond %{REQUEST_FILENAME} /sobre-mi/$
+RewriteRule . /index.php [L]
+</IfModule>
