@@ -11,5 +11,8 @@
 - [Hotlinking imágenes](https://carlos.sanchezdonate.com/articulo/vinculos-intercalados-imagenes/)
 - [Redirecciones en nginx](https://carlos.sanchezdonate.com/articulo/recargar-configuracion-nginx/)
 
+## Herramientas:
+- [Generador de redirecciones desde el servidor](https://carlos.sanchezdonate.com/recursos/redirecciones-servidor/)
+
 ## Información sobre Carlos Sánchez
 - [Linktree](https://carlos.sanchezdonate.com/linktree/)
