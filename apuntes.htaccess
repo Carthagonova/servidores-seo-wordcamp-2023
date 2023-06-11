@@ -68,7 +68,7 @@ RewriteRule .* - [F,L]
 
 # identificación usuario
 
-AuthUserFile /home/stage/web/stage.bigseo.com/public_html/.htpasswd
+AuthUserFile /home/stage/web/test-carlos.sanchezdonate.com/public_html/.htpasswd
 AuthType Basic
 AuthName "Prueba a entrar"
 Require valid-user
